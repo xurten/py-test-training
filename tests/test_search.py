@@ -5,16 +5,16 @@ from pages.result import DuckDuckGoResultPage
 from pages.search import DuckDuckGoSearchPage
 
 ANIMALS = [
-    'panda',
-    'python',
-    'polar bear',
-    'parrot',
-    'porcupine',
-    'parakeet',
-    'pangolin',
-    'panther',
-    'platypus',
-    'peacock'
+    'panda'
+    # 'python',
+    # 'polar bear',
+    # 'parrot',
+    # 'porcupine',
+    # 'parakeet',
+    # 'pangolin',
+    # 'panther',
+    # 'platypus',
+    # 'peacock'
 ]
 
 @pytest.mark.parametrize('phrase', ANIMALS)
