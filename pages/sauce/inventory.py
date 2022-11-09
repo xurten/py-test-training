@@ -10,6 +10,10 @@ class SauceInventoryPage:
         self.inventory_list = page.locator(".inventory_list")
         self.footer = page.locator('//*[@id="page_wrapper"]/footer/div')
 
+    def logout_user(self):
+        self.open_navigation_menu()
+        self.click_logout()
+
     def open_navigation_menu(self):
         self.navigation_menu.click()
 
@@ -21,3 +25,12 @@ class SauceInventoryPage:
 
     def click_external_service(self, service_name):
         self.page.get_by_role("link", name=f"{service_name}").click()
+
+    def get_inventory_list(self):
+        return self.page.locator(".inventory_list")
+
+    def click_add_first_item(self):
+        self.page.locator("[data-test=\"add-to-cart-sauce-labs-backpack\"]").click()
+
+    def click_card(self):
+        self.page.locator("#shopping_cart_container a").click()
