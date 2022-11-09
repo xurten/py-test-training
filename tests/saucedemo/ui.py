@@ -49,25 +49,25 @@ def test_redirection_media(external_service: str, page: Page, login_page: SauceL
 
 
 # Scenario 4 Check that adding one item is good
-def test_adding_of_one_item(page: Page, login_page: SauceLoginPage, inventory_page: SauceInventoryPage, card: SauceCard) -> None:
+def test_adding_of_one_item(page: Page, login_page: SauceLoginPage, inventory_page: SauceInventoryPage, card_page: SauceCard) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page.click_generic_item(0)
     inventory_page.click_card()
-    assert card.get_card_quantity_in_menu() == '1'
-    assert card.get_card_quantity() == '1'
+    assert card_page.get_card_quantity_in_menu() == '1'
+    assert card_page.get_card_quantity() == '1'
     inventory_page.logout_user()
 
 
 # Scenario 5 Add 3 items and remove one item
-def test_three_items_and_remove_first_one(page: Page, login_page: SauceLoginPage, inventory_page: SauceInventoryPage, card: SauceCard) -> None:
+def test_three_items_and_remove_first_one(page: Page, login_page: SauceLoginPage, inventory_page: SauceInventoryPage, card_page: SauceCard) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page.click_generic_item(0)
     inventory_page.click_generic_item(1)
     inventory_page.click_generic_item(2)
     inventory_page.click_generic_remove_item(0)
     inventory_page.click_card()
-    assert card.get_card_quantity_in_menu() == '2'
-    assert card.get_card_quantity() == '2'
+    assert card_page.get_card_quantity_in_menu() == '2'
+    assert card_page.get_card_quantity() == '2'
     inventory_page.logout_user()
 
 
