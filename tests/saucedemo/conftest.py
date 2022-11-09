@@ -2,6 +2,7 @@ import pytest
 from playwright.async_api import Page
 
 from pages.sauce.card import SauceCard
+from pages.sauce.checkout import SauceCheckout
 from pages.sauce.inventory import SauceInventoryPage
 from pages.sauce.login import SauceLoginPage
 
@@ -17,5 +18,10 @@ def inventory_page(page: Page) -> SauceInventoryPage:
 
 
 @pytest.fixture
-def card(page: Page) -> SauceCard:
+def card_page(page: Page) -> SauceCard:
     return SauceCard(page)
+
+
+@pytest.fixture
+def checkout_page(page: Page) -> SauceCheckout:
+    return SauceCheckout(page)

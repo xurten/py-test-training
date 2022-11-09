@@ -29,8 +29,13 @@ class SauceInventoryPage:
     def get_inventory_list(self):
         return self.page.locator(".inventory_list")
 
-    def click_add_first_item(self):
-        self.page.locator("[data-test=\"add-to-cart-sauce-labs-backpack\"]").click()
+    def click_generic_item(self, index):
+        if index < 0 or index > 5:
+            raise Exception("Not valid index")
+        self.get_inventory_list().locator('.btn_inventory').nth(index).click()
+
+    def click_generic_remove_item(self, index):
+        self.get_inventory_list().locator('.btn_inventory').nth(index).click()
 
     def click_card(self):
         self.page.locator("#shopping_cart_container a").click()

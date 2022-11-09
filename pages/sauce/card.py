@@ -1,6 +1,8 @@
 
 from playwright.sync_api import Page
 
+from tests.saucedemo.helper import sum_list_of_strings
+
 
 class SauceCard:
     URL = 'https://saucedemo.com'
@@ -16,4 +18,8 @@ class SauceCard:
         return self.page.locator('//*[@id="shopping_cart_container"]/a/span').text_content()
 
     def get_card_quantity(self):
-        return self.page.locator('//*[@id="cart_contents_container"]/div/div[1]/div[3]/div[1]').text_content()
+        list = self.page.locator('.cart_quantity').all_text_contents()
+        return sum_list_of_strings(list)
+
+    def click_checkout(self):
+        self.page.locator('.checkout_button').click()
