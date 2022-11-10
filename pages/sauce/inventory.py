@@ -34,6 +34,11 @@ class SauceInventoryPage:
             raise Exception("Not valid index")
         self.get_inventory_list().locator('.btn_inventory').nth(index).click()
 
+    def click_generic_item_name(self, index):
+        if index < 0 or index > 5:
+            raise Exception("Not valid index")
+        self.get_inventory_list().locator('.inventory_item_name').nth(index).click()
+
     def click_generic_remove_item(self, index):
         self.get_inventory_list().locator('.btn_inventory').nth(index).click()
 
