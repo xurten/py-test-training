@@ -37,3 +37,26 @@ def validate_picture(picture_path):
 
 def remove_file(file_path):
     os.remove(file_path)
+
+
+def is_list_in_alphabetic_order(list):
+    pass
+
+
+def is_list_low_to_high(elements:list):
+    is_low_to_high_order = True
+    for i in range(len(elements)):
+        elements[i] = float(elements[i].replace('$', ''))
+    print(elements)
+    for i in range(len(elements)-1):
+        if elements[i] > elements[i+1]:
+            is_low_to_high_order = False
+            break
+    return is_low_to_high_order
+
+
+if __name__ == '__main__':
+    new_list = ['$49.99', '$29.99', '$15.99', '$15.99', '$9.99', '$7.99']
+    # new_list = ['$7.99', '$9.99']
+    # new_list = ['7.99', '9.99', '15.99', '15.99', '29.99', '49.99']
+    print(is_list_low_to_high(new_list))

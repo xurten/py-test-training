@@ -157,3 +157,4 @@ def test_deletion_of_multiply_items(page: Page, login_page: SauceLoginPage, inve
     inventory_page.click_card()
     assert card_page.get_card_quantity_in_menu() == '1'
     assert card_page.get_card_quantity() == '1'
+    inventory_page.logout_user()
