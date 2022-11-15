@@ -1,13 +1,11 @@
 import pytest
 from playwright.async_api import Page
 
-from pages.sauce.inventory import SauceInventoryPage
-from pages.sauce.login import SauceLoginPage
 from tests.saucedemo.user_informations import STANDARD_PASSWORD, STANDARD_USER
 
 
 @pytest.fixture(scope="function", autouse=True)
-def before_each_after_each(page: Page):
+def before_each_after_each(page: Page) -> None:
     page.context.tracing.start(screenshots=True, snapshots=True, sources=True)
     yield
     page.context.tracing.stop(path="trace.zip")
@@ -16,8 +14,7 @@ def before_each_after_each(page: Page):
 
 # Scenario 1 Check login flow for standard user
 @pytest.mark.regression
-def test_login_flow_with_standard_user(page: Page, login_page: SauceLoginPage,
-                                       inventory_page: SauceInventoryPage) -> None:
+def test_login_flow_with_standard_user(page, login_page, inventory_page) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     assert page.url == 'https://www.saucedemo.com/inventory.html'
     inventory_page.logout_user()
@@ -26,6 +23,6 @@ def test_login_flow_with_standard_user(page: Page, login_page: SauceLoginPage,
 
 # Scenario 2 Check wrong login
 @pytest.mark.regression
-def test_wrong_login(login_page: SauceLoginPage):
+def test_wrong_login(login_page) -> None:
     login_page.login_as_user('aaaa', 'bbb')
     assert login_page.get_error_message() == 'Epic sadface: Username and password do not match any user in this service'

@@ -9,25 +9,25 @@ from pages.sauce.login import SauceLoginPage
 
 
 @pytest.fixture
-def login_page(page: Page) -> SauceLoginPage:
+def login_page(page) -> SauceLoginPage:
     return SauceLoginPage(page)
 
 
 @pytest.fixture
-def inventory_page(page: Page) -> SauceInventoryPage:
+def inventory_page(page) -> SauceInventoryPage:
     return SauceInventoryPage(page)
 
 
 @pytest.fixture
-def card_page(page: Page) -> SauceCard:
+def card_page(page) -> SauceCard:
     return SauceCard(page)
 
 
 @pytest.fixture
-def checkout_page(page: Page) -> SauceCheckout:
+def checkout_page(page) -> SauceCheckout:
     return SauceCheckout(page)
 
 
 @pytest.fixture
-def item_page(page: Page) -> ItemPage:
+def item_page(page) -> ItemPage:
     return ItemPage(page)

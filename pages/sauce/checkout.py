@@ -23,7 +23,11 @@ class SauceCheckout:
         self.finish_button.click()
 
     def get_complete_status(self):
-        return self.page.locator('.complete-text').text_content()
+        return self.page \
+            .locator('.complete-text') \
+            .text_content()
 
     def get_complete_header_status(self):
-        return self.page.locator('.complete-header').text_content()
+        return self.page \
+            .locator('.complete-header') \
+            .text_content()

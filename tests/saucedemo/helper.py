@@ -35,16 +35,16 @@ def validate_picture(picture_path) -> None:
     assert picture_size > 0
 
 
-def remove_file(file_path):
+def remove_file(file_path) -> None:
     os.remove(file_path)
 
 
-def is_list_in_a_to_z_order(elements: list):
+def is_list_in_a_to_z_order(elements: list) -> bool:
     list_after_sort = sorted(elements)
     return elements == list_after_sort
 
 
-def is_list_in_z_to_a_order(elements: list):
+def is_list_in_z_to_a_order(elements: list) -> bool:
     list_after_sort = sorted(elements, reverse=True)
     return elements == list_after_sort
 
