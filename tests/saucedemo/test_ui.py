@@ -48,9 +48,8 @@ def test_add_one_item(login_page, inventory_page, card_page) -> None:
 @pytest.mark.regression
 def test_add_three_items_and_remove_first_one(login_page, inventory_page, card_page) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
-    inventory_page.click_generic_item(0)
-    inventory_page.click_generic_item(1)
-    inventory_page.click_generic_item(2)
+    for index in range(3):
+        inventory_page.click_generic_item(index)
     inventory_page.click_generic_remove_item(0)
     inventory_page.click_card()
     assert card_page.get_card_quantity_in_menu() == '2'
@@ -74,10 +73,8 @@ def test_add_one_item_and_checkout(login_page, inventory_page, card_page, checko
 @pytest.mark.regression
 def test_add_four_items_and_checkout(login_page, inventory_page, card_page, checkout_page) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
-    inventory_page.click_generic_item(0)
-    inventory_page.click_generic_item(1)
-    inventory_page.click_generic_item(2)
-    inventory_page.click_generic_item(3)
+    for index in range(4):
+        inventory_page.click_generic_item(index)
     inventory_page.click_card()
     assert card_page.get_card_quantity_in_menu() == '4'
     assert card_page.get_card_quantity() == '4'
@@ -116,17 +113,10 @@ def test_one_item_display(login_page, inventory_page, card_page, item_page) -> N
 @pytest.mark.regression
 def test_deletion_of_multiply_items(login_page, inventory_page, card_page) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
-    inventory_page.click_generic_item(0)
-    inventory_page.click_generic_item(1)
-    inventory_page.click_generic_item(2)
-    inventory_page.click_generic_item(3)
-    inventory_page.click_generic_item(4)
-    inventory_page.click_generic_item(5)
-    inventory_page.click_generic_remove_item(0)
-    inventory_page.click_generic_remove_item(1)
-    inventory_page.click_generic_remove_item(2)
-    inventory_page.click_generic_remove_item(3)
-    inventory_page.click_generic_remove_item(4)
+    for index in range(6):
+        inventory_page.click_generic_item(index)
+    for remove_index in range(5):
+        inventory_page.click_generic_remove_item(remove_index)
     inventory_page.click_card()
     assert card_page.get_card_quantity_in_menu() == '1'
     assert card_page.get_card_quantity() == '1'
