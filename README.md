@@ -7,3 +7,7 @@ This repository contains python automation tests written by using playwright wit
 # Run the tests
 pip3 install requirements.txt
 pytest --headed --slowmo 1000 -n 6 --html=report.html --self-contained-html --capture=tee-sys -m regression
+
+
+# Example tests results
+![image](https://user-images.githubusercontent.com/7273568/202170660-2a8e0c4b-a6e7-4ed2-b9c6-4caf7c5e13ef.png)
