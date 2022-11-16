@@ -27,14 +27,16 @@ def test_footer(login_page, inventory_page) -> None:
 # Scenario 2 Check redirection media
 @pytest.mark.parametrize('external_service', EXTERNAL_SERVICES)
 @pytest.mark.regression
-def test_redirection_media(page, external_service: str, login_page, inventory_page) -> None:
+def test_redirection_media(page, external_service: str, inventory_page) -> None:
     inventory_page.click_external_service(external_service[0])
+    # timeout needed because of opening a new tab
+    page.wait_for_timeout(1000)
     assert external_service[1] in page.context.pages[1].url
 
 
 # Scenario 3 Check that adding one item is good
 @pytest.mark.regression
-def test_add_one_item(login_page, inventory_page, card_page) -> None:
+def test_add_one_item(inventory_page, card_page) -> None:
     inventory_page.click_generic_item(0)
     inventory_page.click_card()
     assert card_page.get_card_quantity_in_menu() == '1'
@@ -43,7 +45,7 @@ def test_add_one_item(login_page, inventory_page, card_page) -> None:
 
 # Scenario 4 Add 3 items and remove one item
 @pytest.mark.regression
-def test_add_three_items_and_remove_first_one(login_page, inventory_page, card_page) -> None:
+def test_add_three_items_and_remove_first_one(inventory_page, card_page) -> None:
     for index in range(3):
         inventory_page.click_generic_item(index)
     inventory_page.click_generic_remove_item(0)
@@ -53,7 +55,7 @@ def test_add_three_items_and_remove_first_one(login_page, inventory_page, card_p
 
 
 # Scenario 5 Add one item and check out
-def test_add_one_item_and_checkout(login_page, inventory_page, card_page, checkout_page) -> None:
+def test_add_one_item_and_checkout(inventory_page, card_page, checkout_page) -> None:
     inventory_page.click_generic_item(0)
     inventory_page.click_card()
     card_page.click_checkout()
@@ -66,7 +68,7 @@ def test_add_one_item_and_checkout(login_page, inventory_page, card_page, checko
 
 # Scenario 6 Add four items and check out
 @pytest.mark.regression
-def test_add_four_items_and_checkout(login_page, inventory_page, card_page, checkout_page) -> None:
+def test_add_four_items_and_checkout(inventory_page, card_page, checkout_page) -> None:
     for index in range(4):
         inventory_page.click_generic_item(index)
     inventory_page.click_card()
@@ -82,7 +84,7 @@ def test_add_four_items_and_checkout(login_page, inventory_page, card_page, chec
 
 # Scenario 7 Check one item display
 @pytest.mark.regression
-def test_one_item_display(login_page, inventory_page, card_page, item_page) -> None:
+def test_one_item_display(inventory_page, card_page, item_page) -> None:
     local_picture_path = 'download_picture.jpg'
     expected_price = '$29.99'
     expected_header = 'Sauce Labs Backpack'
@@ -104,7 +106,7 @@ def test_one_item_display(login_page, inventory_page, card_page, item_page) -> N
 
 # Scenario 8 Check deletion of multiply items
 @pytest.mark.regression
-def test_deletion_of_multiply_items(login_page, inventory_page, card_page) -> None:
+def test_deletion_of_multiply_items(inventory_page, card_page) -> None:
     for index in range(6):
         inventory_page.click_generic_item(index)
     for remove_index in range(5):
