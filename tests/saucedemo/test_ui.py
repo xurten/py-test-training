@@ -7,7 +7,7 @@ from tests.saucedemo.user_informations import STANDARD_USER, STANDARD_PASSWORD
 
 EXTERNAL_SERVICES = [
     ('Facebook', 'https://www.facebook.com/saucelabs'),
-    ('LinkedIn', 'https://www.linkedin.com/company/sauce-labs/'),
+    ('LinkedIn', 'https://www.linkedin.com/'),
     ('Twitter', 'https://twitter.com/saucelabs')
 ]
 
@@ -31,7 +31,7 @@ def test_footer(login_page, inventory_page) -> None:
 def test_redirection_media(page, external_service: str, login_page, inventory_page) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page.click_external_service(external_service[0])
-    assert page.context.pages[1].url == external_service[1]
+    assert external_service[1] in page.context.pages[1].url
 
 
 # Scenario 3 Check that adding one item is good

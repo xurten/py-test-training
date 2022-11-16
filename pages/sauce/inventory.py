@@ -33,7 +33,7 @@ class SauceInventoryPage:
         return self.footer.text_content()
 
     def click_external_service(self, service_name) -> None:
-        self.page\
+        self.page \
             .get_by_role("link", name=f"{service_name}") \
             .click()
 
@@ -81,3 +81,40 @@ class SauceInventoryPage:
         return self.page \
             .locator('.inventory_item_price') \
             .all_text_contents()
+
+    def click_about(self) -> None:
+        self.page \
+            .locator('#about_sidebar_link') \
+            .click()
+
+    def click_all_items(self) -> None:
+        self.page \
+            .locator('#inventory_sidebar_link') \
+            .click()
+
+    def click_reset_app_state(self) -> None:
+        self.page \
+            .locator('#reset_sidebar_link') \
+            .click()
+
+    def is_shopping_cart_empty(self) -> bool:
+        return self.page \
+            .locator('.shopping_cart_link') \
+            .inner_html()  == ''
+
+    def get_shopping_cart_badge_value(self) -> str:
+        return self.page \
+            .locator('.shopping_cart_badge') \
+            .inner_html()
+
+    def get_badge_value(self) -> str:
+        if self.is_shopping_cart_empty():
+            shopping_card_value = '0'
+        else:
+            shopping_card_value = self.get_shopping_cart_badge_value()
+        return shopping_card_value
+
+    def click_menu(self):
+        self.page \
+            .locator('#react-burger-menu-btn') \
+            .click()
