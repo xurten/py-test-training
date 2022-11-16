@@ -1,5 +1,4 @@
 import pytest
-from playwright.async_api import Page
 
 from pages.sauce.card import SauceCard
 from pages.sauce.checkout import SauceCheckout

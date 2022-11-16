@@ -1,6 +1,5 @@
 import pytest
 
-from pages.sauce.inventory import SauceInventoryPage
 from pages.sauce.login import SauceLoginPage
 from tests.saucedemo.helper import download_picture_from_url, validate_picture, remove_file
 from tests.saucedemo.user_informations import STANDARD_USER, STANDARD_PASSWORD
@@ -13,7 +12,8 @@ EXTERNAL_SERVICES = [
 
 
 @pytest.fixture(scope="function", autouse=True)
-def before_each_after_each(inventory_page: SauceInventoryPage) -> None:
+def before_each_after_each(login_page, inventory_page) -> None:
+    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     yield
     inventory_page.logout_user()
 
@@ -21,7 +21,6 @@ def before_each_after_each(inventory_page: SauceInventoryPage) -> None:
 # Scenario 1 Check footer
 @pytest.mark.regression
 def test_footer(login_page, inventory_page) -> None:
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     assert inventory_page.get_footer_text() == "© 2022 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
 
 
@@ -29,7 +28,6 @@ def test_footer(login_page, inventory_page) -> None:
 @pytest.mark.parametrize('external_service', EXTERNAL_SERVICES)
 @pytest.mark.regression
 def test_redirection_media(page, external_service: str, login_page, inventory_page) -> None:
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page.click_external_service(external_service[0])
     assert external_service[1] in page.context.pages[1].url
 
@@ -37,7 +35,6 @@ def test_redirection_media(page, external_service: str, login_page, inventory_pa
 # Scenario 3 Check that adding one item is good
 @pytest.mark.regression
 def test_add_one_item(login_page, inventory_page, card_page) -> None:
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page.click_generic_item(0)
     inventory_page.click_card()
     assert card_page.get_card_quantity_in_menu() == '1'
@@ -47,7 +44,6 @@ def test_add_one_item(login_page, inventory_page, card_page) -> None:
 # Scenario 4 Add 3 items and remove one item
 @pytest.mark.regression
 def test_add_three_items_and_remove_first_one(login_page, inventory_page, card_page) -> None:
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     for index in range(3):
         inventory_page.click_generic_item(index)
     inventory_page.click_generic_remove_item(0)
@@ -58,7 +54,6 @@ def test_add_three_items_and_remove_first_one(login_page, inventory_page, card_p
 
 # Scenario 5 Add one item and check out
 def test_add_one_item_and_checkout(login_page, inventory_page, card_page, checkout_page) -> None:
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page.click_generic_item(0)
     inventory_page.click_card()
     card_page.click_checkout()
@@ -72,7 +67,6 @@ def test_add_one_item_and_checkout(login_page, inventory_page, card_page, checko
 # Scenario 6 Add four items and check out
 @pytest.mark.regression
 def test_add_four_items_and_checkout(login_page, inventory_page, card_page, checkout_page) -> None:
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     for index in range(4):
         inventory_page.click_generic_item(index)
     inventory_page.click_card()
@@ -93,7 +87,6 @@ def test_one_item_display(login_page, inventory_page, card_page, item_page) -> N
     expected_price = '$29.99'
     expected_header = 'Sauce Labs Backpack'
     expected_description = 'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.'
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page.click_generic_item_name(0)
     image_path = item_page.get_image_src()
     full_image_path = f"{SauceLoginPage.URL}{image_path}"
@@ -112,7 +105,6 @@ def test_one_item_display(login_page, inventory_page, card_page, item_page) -> N
 # Scenario 8 Check deletion of multiply items
 @pytest.mark.regression
 def test_deletion_of_multiply_items(login_page, inventory_page, card_page) -> None:
-    login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     for index in range(6):
         inventory_page.click_generic_item(index)
     for remove_index in range(5):
