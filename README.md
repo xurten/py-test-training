@@ -10,4 +10,5 @@ pytest --headed --slowmo 1000 -n 6 --html=report.html --self-contained-html --ca
 
 
 # Example tests results
-![image](https://user-images.githubusercontent.com/7273568/202170660-2a8e0c4b-a6e7-4ed2-b9c6-4caf7c5e13ef.png)
+![image](https://user-images.githubusercontent.com/7273568/202183161-f4cad84d-430f-4a9b-9cf9-1cdc5241d4bd.png)
+
