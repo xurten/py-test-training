@@ -28,3 +28,8 @@ class SauceCard:
         self.page \
             .locator('.checkout_button') \
             .click()
+
+    def click_continue_shopping(self):
+        self.page\
+            .locator('#continue-shopping')\
+            .click()

@@ -34,3 +34,14 @@ def test_navigation_check_all_items(login_page, inventory_page) -> None:
     inventory_page.click_menu()
     inventory_page.click_all_items()
     assert len(inventory_page.get_list_of_item_names()) > 0
+
+
+# Scenario 4 Check continue shopping
+@pytest.mark.regression
+def test_navigation_check_all_items(login_page, inventory_page, card_page) -> None:
+    inventory_page.click_generic_item(0)
+    inventory_page.click_card()
+    assert card_page.get_card_quantity_in_menu() == '1'
+    assert card_page.get_card_quantity() == '1'
+    card_page.click_continue_shopping()
+    assert inventory_page.get_badge_value() == '1'
