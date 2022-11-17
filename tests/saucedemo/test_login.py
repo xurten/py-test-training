@@ -6,10 +6,7 @@ from tests.saucedemo.user_informations import STANDARD_PASSWORD, STANDARD_USER
 
 @pytest.fixture(scope="function", autouse=True)
 def before_each_after_each(page: Page) -> None:
-    page.context.tracing.start(screenshots=True, snapshots=True, sources=True)
     yield
-    page.context.tracing.stop(path="trace.zip")
-    page.close()
 
 
 # Scenario 1 Check login flow for standard user
