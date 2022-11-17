@@ -21,7 +21,8 @@ def before_each_after_each(login_page, inventory_page) -> None:
 # Scenario 1 Check footer
 @pytest.mark.regression
 def test_footer(login_page, inventory_page) -> None:
-    assert inventory_page.get_footer_text() == "© 2022 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+    assert inventory_page.get_footer_text() == "© 2022 Sauce Labs. All Rights Reserved. Terms of Service | Privacy " \
+                                               "Policy "
 
 
 # Scenario 2 Check redirection media

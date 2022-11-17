@@ -1,4 +1,3 @@
-# Scenario 1 Check A to Z
 import pytest
 
 from pages.sauce.inventory import SortAction
@@ -11,7 +10,6 @@ def before_each_after_each(login_page, inventory_page) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     yield
     inventory_page.logout_user()
-
 
 # Scenario 1 Check item names from A to Z
 @pytest.mark.regression

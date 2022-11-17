@@ -30,4 +30,3 @@ def test_wrong_login(login_page) -> None:
 def test_locked_login(login_page) -> None:
     login_page.login_as_user(LOCKED_USER, STANDARD_PASSWORD)
     assert login_page.get_error_message() == 'Epic sadface: Sorry, this user has been locked out.'
-
