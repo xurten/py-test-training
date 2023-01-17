@@ -2,7 +2,7 @@ import os
 from PIL import Image
 
 
-def sum_list_of_strings(number_list) -> str:
+def sum_list_of_strings(number_list: list[int]) -> str:
     count = 0
     for element in number_list:
         count = count + int(element)
@@ -25,7 +25,7 @@ def download_picture_from_url(url_path: str, picture_name='new_picture.jpg') -> 
         print(f"Exception with retrieving of file {e}")
 
 
-def validate_picture(picture_path) -> None:
+def validate_picture(picture_path: str) -> None:
     image = Image.open(picture_path)
     width, height = image.size
     picture_size = os.path.getsize(picture_path)
@@ -35,21 +35,21 @@ def validate_picture(picture_path) -> None:
     assert picture_size > 0
 
 
-def remove_file(file_path) -> None:
+def remove_file(file_path: str) -> None:
     os.remove(file_path)
 
 
-def is_list_in_a_to_z_order(elements: list) -> bool:
+def is_list_in_a_to_z_order(elements: list[str]) -> bool:
     list_after_sort = sorted(elements)
     return elements == list_after_sort
 
 
-def is_list_in_z_to_a_order(elements: list) -> bool:
+def is_list_in_z_to_a_order(elements: list[str]) -> bool:
     list_after_sort = sorted(elements, reverse=True)
     return elements == list_after_sort
 
 
-def is_list_low_to_high(elements: list) -> bool:
+def is_list_low_to_high(elements: list[str]) -> bool:
     is_low_to_high_order = True
     for i in range(len(elements)):
         elements[i] = float(elements[i].replace('$', ''))

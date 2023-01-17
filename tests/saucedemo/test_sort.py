@@ -1,7 +1,7 @@
 import pytest
 
 from pages.sauce.inventory import SortAction
-from tests.saucedemo.helper import is_list_low_to_high, is_list_in_a_to_z_order, is_list_in_z_to_a_order
+from library.helper import is_list_low_to_high, is_list_in_a_to_z_order, is_list_in_z_to_a_order
 from tests.saucedemo.user_informations import STANDARD_USER, STANDARD_PASSWORD
 
 

@@ -1,7 +1,7 @@
 import pytest
 
 from pages.sauce.login import SauceLoginPage
-from tests.saucedemo.helper import download_picture_from_url, validate_picture, remove_file
+from library.helper import download_picture_from_url, validate_picture, remove_file
 from tests.saucedemo.user_informations import STANDARD_USER, STANDARD_PASSWORD
 
 EXTERNAL_SERVICES = [
