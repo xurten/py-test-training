@@ -1,11 +1,9 @@
 import pytest
-from playwright.async_api import Page
-
-from tests.saucedemo.user_informations import STANDARD_PASSWORD, STANDARD_USER, LOCKED_USER
+from test_data.user_informations import STANDARD_PASSWORD, STANDARD_USER, LOCKED_USER
 
 
 @pytest.fixture(scope="function", autouse=True)
-def before_each_after_each(page: Page) -> None:
+def before_each_after_each(page) -> None:
     yield
 
 

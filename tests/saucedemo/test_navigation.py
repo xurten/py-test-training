@@ -1,6 +1,5 @@
 import pytest
-
-from tests.saucedemo.user_informations import STANDARD_USER, STANDARD_PASSWORD
+from test_data.user_informations import STANDARD_USER, STANDARD_PASSWORD
 
 
 @pytest.fixture(scope="function", autouse=True)
