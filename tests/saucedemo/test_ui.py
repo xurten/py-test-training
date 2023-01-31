@@ -88,15 +88,15 @@ def test_add_four_items_and_checkout(inventory_page, card_page, checkout_page) -
 # Scenario 7 Check one item display
 @pytest.mark.regression
 def test_one_item_display(inventory_page, card_page, item_page) -> None:
-    local_picture_path = 'download_picture.jpg'
+    download_picture_name = 'download_picture.jpg'
     expected_price = '$29.99'
     expected_header = 'Sauce Labs Backpack'
     expected_description = 'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.'
     inventory_page.click_generic_item_name(0)
     image_path = item_page.get_image_src()
     full_image_path = f"{SauceLoginPage.URL}{image_path}"
-    download_picture_from_url(full_image_path, local_picture_path)
-    validate_picture(local_picture_path)
+    download_picture_from_url(full_image_path, download_picture_name)
+    validate_picture(download_picture_name)
     assert item_page.get_price() == expected_price
     assert item_page.get_item_title() == expected_header
     assert item_page.get_item_description() == expected_description
@@ -104,7 +104,7 @@ def test_one_item_display(inventory_page, card_page, item_page) -> None:
     inventory_page.click_card()
     assert card_page.get_card_quantity_in_menu() == '1'
     assert card_page.get_card_quantity() == '1'
-    remove_file(local_picture_path)
+    remove_file(download_picture_name)
 
 
 # Scenario 8 Check deletion of multiply items
