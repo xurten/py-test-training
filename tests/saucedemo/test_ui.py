@@ -1,8 +1,9 @@
-import pytest
+from datetime import datetime
 
+import pytest
 from pages.sauce.login import SauceLoginPage
 from library.helper import download_picture_from_url, validate_picture, remove_file
-from tests.saucedemo.user_informations import STANDARD_USER, STANDARD_PASSWORD
+from test_data.user_informations import STANDARD_USER, STANDARD_PASSWORD
 
 EXTERNAL_SERVICES = [
     ('Facebook', 'https://www.facebook.com/saucelabs'),
@@ -21,8 +22,9 @@ def before_each_after_each(login_page, inventory_page) -> None:
 # Scenario 1 Check footer
 @pytest.mark.regression
 def test_footer(login_page, inventory_page) -> None:
-    assert inventory_page.get_footer_text() == "© 2022 Sauce Labs. All Rights Reserved. Terms of Service | Privacy " \
-                                               "Policy "
+    actual_year = datetime.now().year
+    assert inventory_page.get_footer_text() == f"© {actual_year} Sauce Labs. All Rights Reserved. Terms of Service | Privacy " \
+                                               "Policy"
 
 
 # Scenario 2 Check redirection media
