@@ -1,5 +1,5 @@
 # py-test-training
-This repository contains python automation tests written by using playwright with pytest
+This repository contains python automation tests written by using playwright with pytest(The **Fluent Page Object** pattern was used)
 
 * Page objects are in pages folder
 * Tests are in tests folder
