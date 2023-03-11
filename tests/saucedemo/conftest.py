@@ -1,30 +1,30 @@
 import pytest
 
-from pages.sauce.card import SauceCard
-from pages.sauce.checkout import SauceCheckout
-from pages.sauce.inventory import SauceInventoryPage
-from pages.sauce.item import ItemPage
-from pages.sauce.login import SauceLoginPage
+from pages.sauce.card_page import CardPage
+from pages.sauce.checkout_page import CheckoutPage
+from pages.sauce.inventory_page import InventoryPage
+from pages.sauce.item_page import ItemPage
+from pages.sauce.login_page import LoginPage
 
 
 @pytest.fixture
-def login_page(page) -> SauceLoginPage:
-    return SauceLoginPage(page)
+def login_page(page) -> LoginPage:
+    return LoginPage(page)
 
 
 @pytest.fixture
-def inventory_page(page) -> SauceInventoryPage:
-    return SauceInventoryPage(page)
+def inventory_page(page) -> InventoryPage:
+    return InventoryPage(page)
 
 
 @pytest.fixture
-def card_page(page) -> SauceCard:
-    return SauceCard(page)
+def card_page(page) -> CardPage:
+    return CardPage(page)
 
 
 @pytest.fixture
-def checkout_page(page) -> SauceCheckout:
-    return SauceCheckout(page)
+def checkout_page(page) -> CheckoutPage:
+    return CheckoutPage(page)
 
 
 @pytest.fixture

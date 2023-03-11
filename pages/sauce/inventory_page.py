@@ -5,6 +5,9 @@ from typing import Optional
 import playwright as playwright
 from playwright.sync_api import Page
 
+from pages.sauce.base_page import BasePage
+from pages.sauce.login_page import LoginPage
+
 
 class SortAction(Enum):
     NAME_ASC = "az"
@@ -13,10 +16,10 @@ class SortAction(Enum):
     PRICE_DESC = "hilo"
 
 
-class SauceInventoryPage:
+class InventoryPage(BasePage):
 
     def __init__(self, page: Page) -> None:
-        self.page = page
+        super().__init__(page)
         self.navigation_menu = page.get_by_role("button", name="Open Menu")
         self.logout_option = page.get_by_role("link", name="Logout")
         self.inventory_list = page.locator(".inventory_list")
@@ -25,9 +28,11 @@ class SauceInventoryPage:
     def logout_user(self) -> None:
         self.open_navigation_menu()
         self.click_logout()
+        return LoginPage(self.page)
 
     def open_navigation_menu(self) -> None:
         self.navigation_menu.click()
+        return InventoryPage(self.page)
 
     def click_logout(self) -> None:
         self.logout_option.click()
@@ -52,6 +57,7 @@ class SauceInventoryPage:
             .locator('.btn_inventory') \
             .nth(index) \
             .click()
+        return InventoryPage(self.page)
 
     def click_generic_item_name(self, index: int) -> None:
         if index < 0 or index > 5:
@@ -60,24 +66,30 @@ class SauceInventoryPage:
             .locator('.inventory_item_name') \
             .nth(index) \
             .click()
+        return InventoryPage(self.page)
 
     def click_generic_remove_item(self, index: int) -> None:
         self.get_inventory_list() \
             .locator('.btn_inventory') \
             .nth(index) \
             .click()
+        return InventoryPage(self.page)
 
     def click_card(self) -> None:
         self.page \
             .locator("#shopping_cart_container a") \
             .click()
+        return InventoryPage(self.page)
 
     def click_sort_items(self, sort_actions: str) -> None:
         self.page \
             .locator("[data-test=\"product_sort_container\"]") \
             .select_option(sort_actions)
 
-    def get_list_of_item_names(self) -> list[str]:
+    def verify_items_names(self):
+        assert len(self._get_list_of_item_names()) > 0
+
+    def _get_list_of_item_names(self) -> list[str]:
         return self.page \
             .locator('.inventory_item_name') \
             .all_text_contents()
@@ -91,6 +103,7 @@ class SauceInventoryPage:
         self.page \
             .locator('#about_sidebar_link') \
             .click()
+        return LoginPage(self.page)
 
     def click_all_items(self) -> None:
         self.page \
@@ -101,6 +114,7 @@ class SauceInventoryPage:
         self.page \
             .locator('#reset_sidebar_link') \
             .click()
+        return InventoryPage(self.page)
 
     def is_shopping_cart_empty(self) -> bool:
         return self.page \
@@ -112,7 +126,11 @@ class SauceInventoryPage:
             .locator('.shopping_cart_badge') \
             .inner_html()
 
-    def get_badge_value(self) -> str:
+    def verify_badge_count(self, expected_count):
+        assert self._get_badge_value() == expected_count
+        return InventoryPage(self.page)
+
+    def _get_badge_value(self) -> str:
         if self.is_shopping_cart_empty():
             shopping_card_value = '0'
         else:
@@ -123,3 +141,4 @@ class SauceInventoryPage:
         self.page \
             .locator('#react-burger-menu-btn') \
             .click()
+        return InventoryPage(self.page)
