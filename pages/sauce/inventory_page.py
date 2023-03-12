@@ -109,6 +109,7 @@ class InventoryPage(BasePage):
         self.page \
             .locator('#inventory_sidebar_link') \
             .click()
+        return InventoryPage(self.page)
 
     def click_reset_app_state(self) -> None:
         self.page \
