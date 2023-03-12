@@ -17,7 +17,7 @@ class LoginPage(BasePage):
         self.page.goto(self.URL)
         self.set_credentials(username, password)
         self.click_login()
-        return LoginPage(self.page)
+        return self
 
     def _get_error_message(self) -> str:
         self.page.locator("[data-test=\"error\"]")\
@@ -28,7 +28,7 @@ class LoginPage(BasePage):
 
     def verify_url(self, expected_url):
         assert self.page.url == expected_url
-        return LoginPage(self.page)
+        return self
 
     def verify_error_message(self, expected_error_message):
         assert self._get_error_message() == expected_error_message
@@ -36,10 +36,10 @@ class LoginPage(BasePage):
     def set_credentials(self, username: str, password: str) -> None:
         self.username.fill(username)
         self.password.fill(password)
-        return LoginPage(self.page)
+        return self
 
     def click_login(self) -> None:
         self.login_button.click()
-        return LoginPage(self.page)
+        return self
 
 

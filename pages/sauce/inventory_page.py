@@ -32,7 +32,7 @@ class InventoryPage(BasePage):
 
     def open_navigation_menu(self) -> None:
         self.navigation_menu.click()
-        return InventoryPage(self.page)
+        return self
 
     def click_logout(self) -> None:
         self.logout_option.click()
@@ -57,7 +57,7 @@ class InventoryPage(BasePage):
             .locator('.btn_inventory') \
             .nth(index) \
             .click()
-        return InventoryPage(self.page)
+        return self
 
     def click_generic_item_name(self, index: int) -> None:
         if index < 0 or index > 5:
@@ -66,20 +66,20 @@ class InventoryPage(BasePage):
             .locator('.inventory_item_name') \
             .nth(index) \
             .click()
-        return InventoryPage(self.page)
+        return self
 
     def click_generic_remove_item(self, index: int) -> None:
         self.get_inventory_list() \
             .locator('.btn_inventory') \
             .nth(index) \
             .click()
-        return InventoryPage(self.page)
+        return self
 
     def click_card(self) -> None:
         self.page \
             .locator("#shopping_cart_container a") \
             .click()
-        return InventoryPage(self.page)
+        return self
 
     def click_sort_items(self, sort_actions: str) -> None:
         self.page \
@@ -114,7 +114,7 @@ class InventoryPage(BasePage):
         self.page \
             .locator('#reset_sidebar_link') \
             .click()
-        return InventoryPage(self.page)
+        return self
 
     def is_shopping_cart_empty(self) -> bool:
         return self.page \
@@ -128,7 +128,7 @@ class InventoryPage(BasePage):
 
     def verify_badge_count(self, expected_count):
         assert self._get_badge_value() == expected_count
-        return InventoryPage(self.page)
+        return self
 
     def _get_badge_value(self) -> str:
         if self.is_shopping_cart_empty():
@@ -141,4 +141,4 @@ class InventoryPage(BasePage):
         self.page \
             .locator('#react-burger-menu-btn') \
             .click()
-        return InventoryPage(self.page)
+        return self

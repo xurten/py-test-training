@@ -22,7 +22,6 @@ def before_each_after_each(login_page, inventory_page) -> None:
 
 
 # Scenario 1. Check footer
-@pytest.mark.regression
 def test_footer(inventory_page) -> None:
     actual_year = datetime.now().year
     assert inventory_page.get_footer_text() == f"© {actual_year} Sauce Labs. All Rights Reserved. Terms of Service | Privacy " \
@@ -31,7 +30,6 @@ def test_footer(inventory_page) -> None:
 
 # Scenario 2. Check redirection media
 @pytest.mark.parametrize('external_service', EXTERNAL_SERVICES)
-@pytest.mark.regression
 def test_redirection_media(inventory_page, external_service: str) -> None:
     inventory_page.click_external_service(external_service[0])
     # timeout needed because of opening a new tab
@@ -40,7 +38,6 @@ def test_redirection_media(inventory_page, external_service: str) -> None:
 
 
 # Scenario 3. Check that adding one item is good
-@pytest.mark.regression
 def test_add_one_item(inventory_page) -> None:
     inventory_page.click_generic_item(0) \
         .click_card() \
@@ -49,7 +46,6 @@ def test_add_one_item(inventory_page) -> None:
 
 
 # Scenario 4. Add 3 items and remove one item
-@pytest.mark.regression
 def test_add_three_items_and_remove_first_one(inventory_page) -> None:
     for index in range(3):
         inventory_page.click_generic_item(index)
@@ -74,7 +70,6 @@ def test_add_one_item_and_checkout(inventory_page) -> None:
 
 
 # Scenario 6. Add four items and check out
-@pytest.mark.regression
 def test_add_four_items_and_checkout(inventory_page) -> None:
     for index in range(4):
         inventory_page.click_generic_item(index)
@@ -91,7 +86,6 @@ def test_add_four_items_and_checkout(inventory_page) -> None:
 
 
 # Scenario 7. Check one item display
-@pytest.mark.regression
 def test_one_item_display(inventory_page) -> None:
     download_picture_name = 'download_picture.jpg'
     expected_price = '$29.99'
@@ -114,7 +108,6 @@ def test_one_item_display(inventory_page) -> None:
 
 
 # Scenario 8. Check deletion of multiply items
-@pytest.mark.regression
 def test_deletion_of_multiply_items(inventory_page) -> None:
     for index in range(6):
         inventory_page.click_generic_item(index)

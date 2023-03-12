@@ -12,7 +12,6 @@ def before_each_after_each(page) -> None:
 
 
 # Scenario 1. Navigation reset app state
-@pytest.mark.regression
 def test_navigation_reset_app_state(inventory_page) -> None:
     for index in range(3):
         inventory_page.click_generic_item(index)
@@ -23,7 +22,6 @@ def test_navigation_reset_app_state(inventory_page) -> None:
 
 
 # Scenario 2. Navigation check about
-@pytest.mark.regression
 def test_navigation_check_about(inventory_page) -> None:
     inventory_page.click_menu() \
         .click_about() \
@@ -31,7 +29,6 @@ def test_navigation_check_about(inventory_page) -> None:
 
 
 # Scenario 3. Navigation check all items
-@pytest.mark.regression
 def test_navigation_check_all_items(inventory_page) -> None:
     inventory_page.click_menu() \
         .click_all_items() \
@@ -39,7 +36,6 @@ def test_navigation_check_all_items(inventory_page) -> None:
 
 
 # Scenario 4. Check continue shopping
-@pytest.mark.regression
 def test_navigation_check_all_items(inventory_page) -> None:
     inventory_page.click_generic_item(0) \
         .click_card() \

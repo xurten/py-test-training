@@ -25,16 +25,16 @@ class CardPage(BasePage):
         card_quantity = self._get_card_quantity()
         assert card_menu_quantity == expected_card_quantity, f" Wrong menu card quantity : {card_menu_quantity} != {expected_card_quantity}"
         assert card_quantity == expected_card_quantity, f" Wrong card quantity : {card_quantity} != {expected_card_quantity}"
-        return CardPage(self.page)
+        return self
 
     def click_checkout(self) -> None:
         self.page \
             .locator('.checkout_button') \
             .click()
-        return CardPage(self.page)
+        return self
 
     def click_continue_shopping(self) -> None:
         self.page \
             .locator('#continue-shopping') \
             .click()
-        return CardPage(self.page)
+        return self

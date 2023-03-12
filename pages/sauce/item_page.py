@@ -9,8 +9,6 @@ class ItemPage(BasePage):
     def __init__(self, page: Page) -> None:
         super().__init__(page)
 
-
-
     def _get_price(self) -> Coroutine[Any, Any, Optional[str]]:
         return self.page \
             .locator('.inventory_details_price') \
@@ -33,16 +31,16 @@ class ItemPage(BasePage):
         assert self._get_price() == expected_price
         assert self._get_item_title() == expected_header
         assert self._get_item_description() == expected_description
-        return ItemPage(self.page)
+        return self
 
     def get_image_src(self) -> Coroutine[Any, Any, Optional[str]]:
         return self.page \
             .locator('.inventory_details_img') \
             .get_attribute('src')
-        return ItemPage(self.page)
+        return self
 
     def click_add_item(self) -> None:
         self.page \
             .locator('.btn_inventory') \
             .click()
-        return ItemPage(self.page)
+        return self

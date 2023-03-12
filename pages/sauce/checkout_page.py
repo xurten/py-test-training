@@ -21,17 +21,17 @@ class CheckoutPage(BasePage):
         self.firstname.fill(firstname)
         self.lastname.fill(lastname)
         self.postal_code.fill(postal_code)
-        return CheckoutPage(self.page)
+        return self
 
     def click_continue(self) -> None:
         self.continue_button\
             .click()
-        return CheckoutPage(self.page)
+        return self
 
     def click_finish_button(self) -> None:
         self.finish_button\
             .click()
-        return CheckoutPage(self.page)
+        return self
 
     def _get_complete_status(self) -> Optional[str]:
         return self.page \
@@ -45,8 +45,8 @@ class CheckoutPage(BasePage):
 
     def verify_complete_status(self, expect_complete_status):
         assert self._get_complete_status() == expect_complete_status
-        return CheckoutPage(self.page)
+        return self
 
     def verify_complete_status_header(self, expect_complete_status_header):
         assert self._get_complete_header_status() == expect_complete_status_header
-        return CheckoutPage(self.page)
+        return self
