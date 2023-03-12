@@ -1,5 +1,5 @@
 # py-test-training
-This repository contains python automation tests written by using playwright with pytest
+This repository contains python automation tests written by using playwright with pytest(The **Fluent Page Object** pattern was used)
 
 * Page objects are in pages folder
 * Tests are in tests folder
@@ -12,5 +12,5 @@ For html report add:
 --template=html1/index.html --report=report.html
 
 # Example tests results
-![image](https://user-images.githubusercontent.com/7273568/202183161-f4cad84d-430f-4a9b-9cf9-1cdc5241d4bd.png)
+![image](https://user-images.githubusercontent.com/7273568/224503717-e861b105-7b73-4a5e-bae7-b3f43c22d72d.png)
 
