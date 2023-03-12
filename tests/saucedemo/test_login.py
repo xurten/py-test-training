@@ -14,12 +14,12 @@ def test_login_flow_with_standard_user(login_page) -> None:
 
 
 # Scenario 2. Check wrong login
-def test_wrong_login(login_page) -> None:
+def test_incorrect_login(login_page) -> None:
     login_page.login_as_user('aaaa', 'bbb') \
         .verify_error_message('Epic sadface: Username and password do not match any user in this service')
 
 
 # Scenario 3. Check locked user
-def test_locked_login(login_page) -> None:
+def test_locked_out_user_login(login_page) -> None:
     login_page.login_as_user(LOCKED_USER, STANDARD_PASSWORD) \
         .verify_error_message('Epic sadface: Sorry, this user has been locked out.')
