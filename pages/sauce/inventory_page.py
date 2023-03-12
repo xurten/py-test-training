@@ -1,4 +1,3 @@
-import xml
 from enum import Enum
 from typing import Optional
 
@@ -17,6 +16,7 @@ class SortAction(Enum):
 
 
 class InventoryPage(BasePage):
+    ITEM_COUNT = 6
 
     def __init__(self, page: Page) -> None:
         super().__init__(page)
@@ -28,6 +28,7 @@ class InventoryPage(BasePage):
     def logout_user(self) -> None:
         self.open_navigation_menu()
         self.click_logout()
+
         return LoginPage(self.page)
 
     def open_navigation_menu(self) -> None:
@@ -38,8 +39,7 @@ class InventoryPage(BasePage):
         self.logout_option.click()
 
     def get_footer_text(self) -> Optional[str]:
-        return self.footer\
-            .text_content()
+        return self.footer.text_content()
 
     def click_external_service(self, service_name: str) -> None:
         self.page \
@@ -51,7 +51,7 @@ class InventoryPage(BasePage):
             .locator(".inventory_list")
 
     def click_generic_item(self, index: int) -> None:
-        if index < 0 or index > 5:
+        if not 0 <= index < self.ITEM_COUNT:
             raise Exception("Not valid index")
         self.get_inventory_list() \
             .locator('.btn_inventory') \
@@ -60,7 +60,7 @@ class InventoryPage(BasePage):
         return self
 
     def click_generic_item_name(self, index: int) -> None:
-        if index < 0 or index > 5:
+        if not 0 <= index < self.ITEM_COUNT:
             raise Exception("Not valid index")
         self.get_inventory_list() \
             .locator('.inventory_item_name') \
@@ -119,7 +119,7 @@ class InventoryPage(BasePage):
     def is_shopping_cart_empty(self) -> bool:
         return self.page \
             .locator('.shopping_cart_link') \
-            .inner_html()  == ''
+            .inner_html() == ''
 
     def get_shopping_cart_badge_value(self) -> str:
         return self.page \
