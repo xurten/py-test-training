@@ -41,7 +41,7 @@ def test_redirection_media(inventory_page, external_service: str) -> None:
 def test_add_one_item(inventory_page) -> None:
     inventory_page.click_generic_item(0) \
         .click_card() \
-        .navigate_to(Pages.CARD_PAGE) \
+        .navigate_to(Pages.CardPage) \
         .verify_card_quantity('1')
 
 
@@ -51,7 +51,7 @@ def test_add_three_items_and_remove_first_one(inventory_page) -> None:
         inventory_page.click_generic_item(index)
     inventory_page.click_generic_remove_item(0) \
         .click_card() \
-        .navigate_to(Pages.CARD_PAGE) \
+        .navigate_to(Pages.CardPage) \
         .verify_card_quantity('2')
 
 
@@ -59,9 +59,9 @@ def test_add_three_items_and_remove_first_one(inventory_page) -> None:
 def test_add_one_item_and_checkout(inventory_page) -> None:
     inventory_page.click_generic_item(0) \
         .click_card() \
-        .navigate_to(Pages.CARD_PAGE) \
+        .navigate_to(Pages.CardPage) \
         .click_checkout() \
-        .navigate_to(Pages.CHECKOUT_PAGE) \
+        .navigate_to(Pages.CheckoutPage) \
         .fill_checkout_information('Andrzej', 'Zaaaaa', '87-100') \
         .click_continue() \
         .click_finish_button() \
@@ -74,10 +74,10 @@ def test_add_four_items_and_checkout(inventory_page) -> None:
     for index in range(4):
         inventory_page.click_generic_item(index)
     inventory_page.click_card() \
-        .navigate_to(Pages.CARD_PAGE) \
+        .navigate_to(Pages.CardPage) \
         .verify_card_quantity('4') \
         .click_checkout() \
-        .navigate_to(Pages.CHECKOUT_PAGE) \
+        .navigate_to(Pages.CheckoutPage) \
         .fill_checkout_information('Andrzej', 'Zaaaaa', '87-100') \
         .click_continue() \
         .click_finish_button() \
@@ -92,17 +92,17 @@ def test_one_item_display(inventory_page) -> None:
     expected_header = 'Sauce Labs Backpack'
     expected_description = 'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.'
     image_path = inventory_page.click_generic_item_name(0) \
-        .navigate_to(Pages.ITEM_PAGE) \
+        .navigate_to(Pages.ItemPage) \
         .get_image_src()
     full_image_path = f"{LoginPage.URL}{image_path}"
     download_picture_from_url(full_image_path, download_picture_name)
     validate_picture(download_picture_name)
-    inventory_page.navigate_to(Pages.ITEM_PAGE) \
+    inventory_page.navigate_to(Pages.ItemPage) \
         .verify_item_fields(expected_price, expected_header, expected_description) \
         .click_add_item() \
-        .navigate_to(Pages.INVENTORY_PAGE) \
+        .navigate_to(Pages.InventoryPage) \
         .click_card() \
-        .navigate_to(Pages.CARD_PAGE) \
+        .navigate_to(Pages.CardPage) \
         .verify_card_quantity('1')
     remove_file(download_picture_name)
 
@@ -114,5 +114,5 @@ def test_deletion_of_multiply_items(inventory_page) -> None:
     for remove_index in range(5):
         inventory_page.click_generic_remove_item(remove_index)
     inventory_page.click_card() \
-        .navigate_to(Pages.CARD_PAGE) \
+        .navigate_to(Pages.CardPage) \
         .verify_card_quantity('1')

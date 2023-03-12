@@ -39,8 +39,8 @@ def test_navigation_check_all_items(inventory_page) -> None:
 def test_navigation_check_all_items(inventory_page) -> None:
     inventory_page.click_generic_item(0) \
         .click_card() \
-        .navigate_to(Pages.CARD_PAGE) \
+        .navigate_to(Pages.CardPage) \
         .verify_card_quantity('1') \
         .click_continue_shopping() \
-        .navigate_to(Pages.INVENTORY_PAGE) \
+        .navigate_to(Pages.InventoryPage) \
         .verify_badge_count('1')

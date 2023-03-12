@@ -10,7 +10,7 @@ from test_data.user_informations import STANDARD_USER, STANDARD_PASSWORD
 def before_each_after_each(login_page) -> None:
     login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     yield
-    inventory_page = login_page.navigate_to(Pages.INVENTORY_PAGE)
+    inventory_page = login_page.navigate_to(Pages.InventoryPage)
     inventory_page.logout_user()
 
 # Scenario 1. Check item names from A to Z
