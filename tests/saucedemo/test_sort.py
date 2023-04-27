@@ -13,6 +13,7 @@ def before_each_after_each(login_page) -> None:
     inventory_page = login_page.navigate_to(Pages.InventoryPage)
     inventory_page.logout_user()
 
+
 # Scenario 1. Check item names from A to Z
 def test_item_name_in_asc_order(inventory_page) -> None:
     inventory_page.click_sort_items(SortAction.NAME_ASC.value)

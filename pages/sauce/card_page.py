@@ -10,7 +10,8 @@ class CardPage(BasePage):
         super().__init__(page)
 
     def menu_quantity(self) -> Optional[str]:
-        return self.page.locator('//*[@id="shopping_cart_container"]/a/span').text_content()
+        return self.page.locator('//*[@id="shopping_cart_container"]/a/span')\
+            .text_content()
 
     def card_quantity(self) -> str:
         quantities = self.page.query_selector_all('.cart_quantity')
@@ -19,8 +20,10 @@ class CardPage(BasePage):
     def verify_card_quantity(self, expected_card_quantity):
         card_menu_quantity = self.menu_quantity()
         card_quantity = self.card_quantity()
-        assert card_menu_quantity == expected_card_quantity, f" Wrong menu card quantity : {card_menu_quantity} != {expected_card_quantity}"
-        assert card_quantity == expected_card_quantity, f" Wrong card quantity : {card_quantity} != {expected_card_quantity}"
+        assert card_menu_quantity == expected_card_quantity,\
+            f" Wrong menu card quantity : {card_menu_quantity} != {expected_card_quantity}"
+        assert card_quantity == expected_card_quantity,\
+            f" Wrong card quantity : {card_quantity} != {expected_card_quantity}"
         return self
 
     def click_checkout(self) -> None:

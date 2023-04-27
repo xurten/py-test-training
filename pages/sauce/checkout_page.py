@@ -17,7 +17,8 @@ class CheckoutPage(BasePage):
         self.continue_button = page.locator("[data-test=\"continue\"]")
         self.finish_button = page.locator("[data-test=\"finish\"]")
 
-    def fill_checkout_information(self, firstname: str, lastname: str, postal_code: str) -> None:
+    def fill_checkout_information(self, firstname: str, lastname: str,
+                                  postal_code: str) -> None:
         self.firstname.fill(firstname)
         self.lastname.fill(lastname)
         self.postal_code.fill(postal_code)

@@ -24,7 +24,8 @@ class ItemPage(BasePage):
     def _get_item_description(self) -> Coroutine[Any, Any, Optional[str]]:
         return self._get_text_content('.inventory_details_desc')
 
-    def verify_item_fields(self, expected_price: str, expected_header: str, expected_description: str):
+    def verify_item_fields(self, expected_price: str, expected_header: str,
+                           expected_description: str):
         assert self._get_price() == expected_price
         assert self._get_item_title() == expected_header
         assert self._get_item_description() == expected_description
