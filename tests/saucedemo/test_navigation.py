@@ -1,5 +1,4 @@
 import pytest
-
 from pages.sauce.base_page import Pages
 from pages.sauce.login_page import LoginPage
 from test_data.user_informations import STANDARD_USER, STANDARD_PASSWORD

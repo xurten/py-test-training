@@ -1,6 +1,5 @@
 from typing import Optional, Coroutine, Any
 from playwright.async_api import Page
-
 from pages.sauce.base_page import BasePage
 
 

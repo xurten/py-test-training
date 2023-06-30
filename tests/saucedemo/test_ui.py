@@ -10,7 +10,7 @@ from test_data.user_informations import STANDARD_USER, STANDARD_PASSWORD
 EXTERNAL_SERVICES = [
     ('Facebook', 'https://www.facebook.com/saucelabs'),
     ('LinkedIn', 'https://www.linkedin.com/'),
-    ('Twitter', 'https://twitter.com/saucelabs')
+    ('Twitter', 'https://twitter.com/home')
 ]
 
 

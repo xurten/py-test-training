@@ -1,5 +1,3 @@
-import logging
-
 from pages.sauce.base_page import Pages
 from test_data.user_informations import STANDARD_PASSWORD, STANDARD_USER, LOCKED_USER
 

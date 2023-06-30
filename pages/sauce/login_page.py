@@ -40,5 +40,3 @@ class LoginPage(BasePage):
     def click_login(self) -> 'LoginPage':
         self.login_button.click()
         return self
-
-

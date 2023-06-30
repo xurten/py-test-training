@@ -1,5 +1,4 @@
 import pytest
-
 from pages.sauce.base_page import Pages
 from pages.sauce.inventory_page import SortAction
 from library.helper import is_list_low_to_high, is_list_in_a_to_z_order, is_list_in_z_to_a_order
