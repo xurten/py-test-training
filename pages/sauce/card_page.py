@@ -10,7 +10,7 @@ class CardPage(BasePage):
         super().__init__(page)
 
     def menu_quantity(self) -> Optional[str]:
-        return self.page.locator('//*[@id="shopping_cart_container"]/a/span')\
+        return self.page.locator('#shopping_cart_container > a > span')\
             .text_content()
 
     def card_quantity(self) -> str:

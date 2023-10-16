@@ -11,7 +11,3 @@ class BasePage:
         module = import_module(f"pages.sauce.{my_page.value.lower()}")
         page_class = getattr(module, my_page.name)
         return page_class(self.page)
-
-
-if __name__ == '__main__':
-    a = BasePage(None)

@@ -19,19 +19,25 @@ class CheckoutPage(BasePage):
 
     def fill_checkout_information(self, firstname: str, lastname: str,
                                   postal_code: str) -> None:
+        if not firstname or not lastname or not postal_code:
+            raise ValueError("All checkout information fields must be provided.")
         self.firstname.fill(firstname)
         self.lastname.fill(lastname)
         self.postal_code.fill(postal_code)
         return self
 
     def click_continue(self) -> None:
-        self.continue_button\
-            .click()
+        try:
+            self.continue_button.click()
+        except Exception as e:
+            raise Exception(f"Error occurred while clicking continue button: {e}")
         return self
 
     def click_finish_button(self) -> None:
-        self.finish_button\
-            .click()
+        try:
+            self.finish_button.click()
+        except Exception as e:
+            raise Exception(f"Error occurred while clicking finish button: {e}")
         return self
 
     def _get_complete_status(self) -> Optional[str]:
@@ -45,9 +51,11 @@ class CheckoutPage(BasePage):
             .text_content()
 
     def verify_complete_status(self, expect_complete_status):
-        assert self._get_complete_status() == expect_complete_status
+        actual_status = self._get_complete_status()
+        assert actual_status == expect_complete_status, f"Expected complete status: {expect_complete_status}, but got: {actual_status}"
         return self
 
     def verify_complete_status_header(self, expect_complete_status_header):
-        assert self._get_complete_header_status() == expect_complete_status_header
+        actual_header = self._get_complete_header_status()
+        assert actual_header == expect_complete_status_header, f"Expected complete status header: {expect_complete_status_header}, but got: {actual_header}"
         return self
