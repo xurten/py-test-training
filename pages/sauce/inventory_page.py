@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, unique
 from typing import Optional
 
 import playwright as playwright
@@ -8,11 +8,27 @@ from pages.sauce.base_page import BasePage
 from pages.sauce.login_page import LoginPage
 
 
+@unique
 class SortAction(Enum):
+    """
+    Enum representing different sorting actions.
+    """
     NAME_ASC = "az"
+    """
+    Sort items by name in ascending order.
+    """
     NAME_DESC = "za"
+    """
+    Sort items by name in descending order.
+    """
     PRICE_ASC = "lohi"
+    """
+    Sort items by price in ascending order.
+    """
     PRICE_DESC = "hilo"
+    """
+    Sort items by price in descending order.
+    """
 
 
 class InventoryPage(BasePage):

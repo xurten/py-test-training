@@ -4,6 +4,9 @@ from pages.sauce.base_page import BasePage
 
 
 class ItemPage(BasePage):
+    PRICE_SELECTOR = '.inventory_details_price'
+    ITEM_TITLE_SELECTOR = '.inventory_details_name'
+    ITEM_DESCRIPTION_SELECTOR = '.inventory_details_desc'
 
     def __init__(self, page: Page) -> None:
         super().__init__(page)
@@ -15,13 +18,13 @@ class ItemPage(BasePage):
         return None
 
     def _get_price(self) -> Coroutine[Any, Any, Optional[str]]:
-        return self._get_text_content('.inventory_details_price')
+        return self._get_text_content(self.PRICE_SELECTOR)
 
     def _get_item_title(self) -> Coroutine[Any, Any, Optional[str]]:
-        return self._get_text_content('.inventory_details_name')
+        return self._get_text_content(self.ITEM_TITLE_SELECTOR)
 
     def _get_item_description(self) -> Coroutine[Any, Any, Optional[str]]:
-        return self._get_text_content('.inventory_details_desc')
+        return self._get_text_content(self.ITEM_DESCRIPTION_SELECTOR)
 
     def verify_item_fields(self, expected_price: str, expected_header: str,
                            expected_description: str):

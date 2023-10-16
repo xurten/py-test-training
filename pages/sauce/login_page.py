@@ -14,16 +14,16 @@ class LoginPage(BasePage):
         self.login_button = page.locator("[data-test=\"login-button\"]")
         self.error_message = page.locator("[data-test=\"error\"]")
 
-    def login_as_user(self, username: str, password: str) -> 'LoginPage':
+    def login_as_user(self, username: str, password: str) -> bool:
         self.page.goto(self.URL)
         self.page.expect_navigation()
         self.set_credentials(username, password)
         self.click_login()
+        self._is_login_successful()
         return self
 
-    def _get_error_message(self) -> str:
-        self.error_message.text_content()
-        return remove_html_tags_from_string(self.error_message.inner_html())
+    def _is_login_successful(self) -> bool:
+        return self.page.url != self.URL
 
     def verify_url(self, expected_url) -> 'LoginPage':
         assert self.page.url == expected_url
@@ -40,3 +40,7 @@ class LoginPage(BasePage):
     def click_login(self) -> 'LoginPage':
         self.login_button.click()
         return self
+
+    def _get_error_message(self) -> str:
+        self.error_message.text_content()
+        return remove_html_tags_from_string(self.error_message.inner_html())
