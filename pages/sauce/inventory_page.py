@@ -44,7 +44,6 @@ class InventoryPage(BasePage):
     async def logout_user(self) -> None:
         await self.open_navigation_menu()
         await self.click_logout()
-
         return LoginPage(self.page)
 
     async def open_navigation_menu(self) -> None:
@@ -54,11 +53,11 @@ class InventoryPage(BasePage):
     async def click_logout(self) -> None:
         await self.logout_option.click()
 
-    def get_footer_text(self) -> Optional[str]:
-        return self.footer.text_content()
+    async def get_footer_text(self) -> Optional[str]:
+        return await self.footer.text_content()
 
-    def click_external_service(self, service_name: str) -> None:
-        self.page \
+    async def click_external_service(self, service_name: str) -> None:
+        await self.page \
             .get_by_role("link", name=f"{service_name}") \
             .click()
 
@@ -73,32 +72,29 @@ class InventoryPage(BasePage):
             .locator('.btn_inventory') \
             .nth(index) \
             .click()
-        return self
 
-    def click_generic_item_name(self, index: int) -> None:
+    async def click_generic_item_name(self, index: int) -> None:
         if not 0 <= index < self.ITEM_COUNT:
             raise Exception("Not valid index")
-        self.get_inventory_list() \
+        await self.get_inventory_list() \
             .locator('.inventory_item_name') \
             .nth(index) \
             .click()
-        return self
 
-    def click_generic_remove_item(self, index: int) -> None:
-        self.get_inventory_list() \
+    async def click_generic_remove_item(self, index: int) -> None:
+        await self.get_inventory_list() \
             .locator('.btn_inventory') \
             .nth(index) \
             .click()
-        return self
 
     async def click_card(self) -> None:
         await self.page.locator("#shopping_cart_container a").click()
-        return self
 
     async def click_sort_items(self, sort_actions: str) -> None:
         await self.page \
             .locator("[data-test=\"product_sort_container\"]") \
             .select_option(sort_actions)
+        return self
 
     async def _get_list_of_item_names(self) -> list[str]:
         item_names = await self.page \

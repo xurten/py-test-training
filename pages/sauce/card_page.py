@@ -15,7 +15,12 @@ class CardPage(BasePage):
 
     async def card_quantity(self) -> str:
         quantities = await self.page.query_selector_all('.cart_quantity')
-        return sum_list_of_strings([q.text_content() for q in quantities])
+
+        if not quantities:
+            return "0"
+
+        quantity_values = [await q.text_content() for q in quantities]
+        return sum_list_of_strings(quantity_values)
 
     async def verify_card_quantity(self, expected_card_quantity):
         card_menu_quantity = await self.menu_quantity()
@@ -24,11 +29,9 @@ class CardPage(BasePage):
             f" Wrong menu card quantity : {card_menu_quantity} != {expected_card_quantity}"
         assert card_quantity == expected_card_quantity,\
             f" Wrong card quantity : {card_quantity} != {expected_card_quantity}"
-        return self
 
     async def click_checkout(self) -> None:
         await self.page.locator('.checkout_button').click()
-        return self
 
     async def click_continue_shopping(self) -> None:
         await self.page.locator('#continue-shopping').click()
