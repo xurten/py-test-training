@@ -22,6 +22,8 @@ This repository contains the following directories:
 - **tests**: This directory contains the test files. Each file in this directory corresponds to a single feature or scenario, and contains one or more test cases.
 - **utils**: This directory contains utility functions used by the tests.
 
+## Async version
+See branch: async_version
 
 ## Run the tests
 ```python
