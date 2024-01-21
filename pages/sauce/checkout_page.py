@@ -1,6 +1,6 @@
 from typing import Optional
 
-from playwright.sync_api import Page
+from playwright.async_api import Page
 
 from pages.sauce.base_page import BasePage
 
@@ -25,18 +25,18 @@ class CheckoutPage(BasePage):
         self.continue_button = page.locator(Locators.CONTINUE_BUTTON)
         self.finish_button = page.locator(Locators.FINISH_BUTTON)
 
-    def fill_checkout_information(self, firstname: str, lastname: str,
+    async def fill_checkout_information(self, firstname: str, lastname: str,
                                   postal_code: str) -> None:
         if not firstname or not lastname or not postal_code:
             raise ValueError("All checkout information fields must be provided.")
-        self.firstname.fill(firstname)
-        self.lastname.fill(lastname)
-        self.postal_code.fill(postal_code)
+        await self.firstname.fill(firstname)
+        await self.lastname.fill(lastname)
+        await self.postal_code.fill(postal_code)
         return self
 
-    def click_continue(self) -> None:
+    async def click_continue(self) -> None:
         try:
-            self.continue_button.click()
+            await self.continue_button.click()
         except Exception as e:
             raise Exception(f"Error occurred while clicking continue button: {e}")
         return self

@@ -2,7 +2,7 @@ from enum import Enum, unique
 from typing import Optional
 
 import playwright as playwright
-from playwright.sync_api import Page
+from playwright.async_api import Page
 
 from pages.sauce.base_page import BasePage
 from pages.sauce.login_page import LoginPage
@@ -41,18 +41,18 @@ class InventoryPage(BasePage):
         self.inventory_list = page.locator(".inventory_list")
         self.footer = page.locator('//*[@id="page_wrapper"]/footer/div')
 
-    def logout_user(self) -> None:
-        self.open_navigation_menu()
-        self.click_logout()
+    async def logout_user(self) -> None:
+        await self.open_navigation_menu()
+        await self.click_logout()
 
         return LoginPage(self.page)
 
-    def open_navigation_menu(self) -> None:
-        self.navigation_menu.click()
+    async def open_navigation_menu(self) -> None:
+        await self.navigation_menu.click()
         return self
 
-    def click_logout(self) -> None:
-        self.logout_option.click()
+    async def click_logout(self) -> None:
+        await self.logout_option.click()
 
     def get_footer_text(self) -> Optional[str]:
         return self.footer.text_content()
@@ -66,10 +66,10 @@ class InventoryPage(BasePage):
         return self.page\
             .locator(".inventory_list")
 
-    def click_generic_item(self, index: int) -> None:
+    async def click_generic_item(self, index: int) -> None:
         if not 0 <= index < self.ITEM_COUNT:
             raise Exception("Not valid index")
-        self.get_inventory_list() \
+        await self.get_inventory_list() \
             .locator('.btn_inventory') \
             .nth(index) \
             .click()
@@ -91,71 +91,76 @@ class InventoryPage(BasePage):
             .click()
         return self
 
-    def click_card(self) -> None:
-        self.page \
-            .locator("#shopping_cart_container a") \
-            .click()
+    async def click_card(self) -> None:
+        await self.page.locator("#shopping_cart_container a").click()
         return self
 
-    def click_sort_items(self, sort_actions: str) -> None:
-        self.page \
+    async def click_sort_items(self, sort_actions: str) -> None:
+        await self.page \
             .locator("[data-test=\"product_sort_container\"]") \
             .select_option(sort_actions)
 
-    def verify_items_names(self):
-        assert len(self._get_list_of_item_names()) > 0
-
-    def _get_list_of_item_names(self) -> list[str]:
-        return self.page \
+    async def _get_list_of_item_names(self) -> list[str]:
+        item_names = await self.page \
             .locator('.inventory_item_name') \
             .all_text_contents()
+        return item_names
 
-    def get_list_of_item_prices(self) -> list[str]:
-        return self.page \
+    async def verify_items_names(self):
+        item_names = await self._get_list_of_item_names()
+        assert len(item_names) > 0
+        return self
+
+    async def get_list_of_item_prices(self) -> list[str]:
+        return await self.page \
             .locator('.inventory_item_price') \
             .all_text_contents()
 
-    def click_about(self) -> None:
-        self.page \
+    async def click_about(self) -> 'LoginPage':
+        await self.page \
             .locator('#about_sidebar_link') \
             .click()
         return LoginPage(self.page)
 
-    def click_all_items(self) -> None:
-        self.page \
+    async def click_all_items(self) -> None:
+        await self.page \
             .locator('#inventory_sidebar_link') \
             .click()
         return InventoryPage(self.page)
 
-    def click_reset_app_state(self) -> None:
-        self.page \
+    async def click_reset_app_state(self) -> None:
+        await self.page \
             .locator('#reset_sidebar_link') \
             .click()
         return self
 
-    def is_shopping_cart_empty(self) -> bool:
-        return self.page \
+    async def is_shopping_cart_empty(self) -> bool:
+        shopping_card = await self.page \
             .locator('.shopping_cart_link') \
-            .inner_html() == ''
+            .inner_html()
+        return shopping_card == ''
 
-    def get_shopping_cart_badge_value(self) -> str:
-        return self.page \
+    async def get_shopping_cart_badge_value(self) -> str:
+        card_value = await self.page \
             .locator('.shopping_cart_badge') \
             .inner_html()
+        return card_value
 
-    def verify_badge_count(self, expected_count):
-        assert self._get_badge_value() == expected_count
+    async def verify_badge_count(self, expected_count):
+        actual_badge_count = await self._get_badge_value()
+        assert actual_badge_count == expected_count
         return self
 
-    def _get_badge_value(self) -> str:
-        if self.is_shopping_cart_empty():
+    async def _get_badge_value(self) -> str:
+        is_card_empty = await self.is_shopping_cart_empty()
+        if is_card_empty:
             shopping_card_value = '0'
         else:
-            shopping_card_value = self.get_shopping_cart_badge_value()
+            shopping_card_value = await self.get_shopping_cart_badge_value()
         return shopping_card_value
 
-    def click_menu(self) -> None:
-        self.page \
+    async def click_menu(self) -> None:
+        await self.page \
             .locator('#react-burger-menu-btn') \
             .click()
         return self

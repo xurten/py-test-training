@@ -1,5 +1,5 @@
 from importlib import import_module
-from playwright.sync_api import Page
+from playwright.async_api import Page
 from pages.sauce.pages import Pages
 
 
