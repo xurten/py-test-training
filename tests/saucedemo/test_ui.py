@@ -6,7 +6,8 @@ from pages.sauce.base_page import Pages
 from pages.sauce.checkout_page import CheckoutPage
 from pages.sauce.inventory_page import InventoryPage
 from pages.sauce.login_page import LoginPage
-from tests.saucedemo.conftest import get_first_page
+from test_data.user_informations import STANDARD_USER, STANDARD_PASSWORD
+from tests.saucedemo.conftest import get_first_page, get_first_page_and_browser
 
 EXTERNAL_SERVICES = [
     ('Facebook', 'https://www.facebook.com/saucelabs'),
@@ -30,17 +31,17 @@ async def test_footer(log_as_standard_user) -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('external_service', EXTERNAL_SERVICES)
-async def test_redirection_media(log_as_standard_user, external_service: str) -> None:
+async def test_redirection_media(browser_page_and_browser, external_service: str) -> None:
     """
         # Scenario 2. Check redirection media
     """
-    page = await get_first_page(log_as_standard_user)
+    page, browser = await get_first_page_and_browser(browser_page_and_browser)
+    login_page = LoginPage(page)
+    await login_page.login_as_user(STANDARD_USER, STANDARD_PASSWORD)
     inventory_page = InventoryPage(page)
     await inventory_page.click_external_service(external_service[0])
     # timeout needed because of opening a new tab
-    # inventory_page.page.wait_for_timeout(2000)
-    page.reload()
-    page.wait_for_load_state("load")
+    inventory_page.page.wait_for_timeout(2000)
     assert external_service[1] in page.context.pages[1].url
 
 
