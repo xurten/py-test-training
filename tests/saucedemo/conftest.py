@@ -15,23 +15,9 @@ async def browser_page():
         await browser.close()
 
 
-@pytest.fixture
-async def browser_page_and_browser():
-    async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=False)
-        page = await browser.new_page()
-        yield page, browser
-        await browser.close()
-
-
 async def get_first_page(browser_page):
     async for page in browser_page:
         return page
-
-
-async def get_first_page_and_browser(browser_page):
-    async for page, browser in browser_page:
-        return page, browser
 
 
 @pytest.fixture(scope='function')
