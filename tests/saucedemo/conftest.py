@@ -1,12 +1,13 @@
 import pytest
 from playwright.async_api import async_playwright
 
+from pages.sauce.inventory_page import InventoryPage
 from pages.sauce.login_page import LoginPage
 from pages.sauce.pages import Pages
 from test_data.user_informations import STANDARD_USER, STANDARD_PASSWORD
 
 
-@pytest.fixture
+@pytest.fixture(scope='function')
 async def browser_page():
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(headless=False)
@@ -28,3 +29,9 @@ async def log_as_standard_user(browser_page) -> None:
     yield page
     inventory_page = login_page.navigate_to(Pages.InventoryPage)
     await inventory_page.logout_user()
+
+
+@pytest.fixture
+async def inventory_page(log_as_standard_user):
+    page = await get_first_page(log_as_standard_user)
+    return InventoryPage(page)

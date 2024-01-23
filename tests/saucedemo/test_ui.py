@@ -4,9 +4,7 @@ import pytest
 from library.helper import download_picture_from_url, validate_picture, remove_file
 from pages.sauce.base_page import Pages
 from pages.sauce.checkout_page import CheckoutPage
-from pages.sauce.inventory_page import InventoryPage
 from pages.sauce.login_page import LoginPage
-from tests.saucedemo.conftest import get_first_page
 
 EXTERNAL_SERVICES = [
     ('Facebook', 'https://www.facebook.com/saucelabs'),
@@ -16,13 +14,13 @@ EXTERNAL_SERVICES = [
 
 
 @pytest.mark.asyncio
-async def test_footer(log_as_standard_user) -> None:
+async def test_footer(inventory_page) -> None:
     """
         # Scenario 1. Check footer
     """
     actual_year = datetime.now().year
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
+
+    inventory_page = await inventory_page
     actual_footer = await inventory_page.get_footer_text()
     assert actual_footer == f"© {actual_year} Sauce Labs. All Rights Reserved. Terms of Service | Privacy " \
                                                "Policy"
@@ -30,53 +28,53 @@ async def test_footer(log_as_standard_user) -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('external_service', EXTERNAL_SERVICES)
-async def test_redirection_media(log_as_standard_user, external_service: str) -> None:
+async def test_redirection_media(inventory_page, external_service: str) -> None:
     """
         # Scenario 2. Check redirection media
     """
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
+    inventory_page = await inventory_page
     await inventory_page.click_external_service(external_service[0])
     # timeout needed because of opening a new tab
     await inventory_page.page.wait_for_timeout(2000)
-    assert external_service[1] in page.context.pages[1].url
+    assert external_service[1] in inventory_page.page.context.pages[1].url
 
 
 @pytest.mark.asyncio
-async def test_add_one_item(log_as_standard_user) -> None:
+async def test_add_one_item(inventory_page) -> None:
     """
         # Scenario 3. Check that adding one item is good
     """
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
+    expected_card_quantity = '1'
+
+    inventory_page = await inventory_page
     await inventory_page.click_generic_item(0)
     await inventory_page.click_card()
     card_page = inventory_page.navigate_to(Pages.CardPage)
-    await card_page.verify_card_quantity('1')
+    await card_page.verify_card_quantity(expected_card_quantity)
 
 
 @pytest.mark.asyncio
-async def test_add_three_items_and_remove_first_one(log_as_standard_user) -> None:
+async def test_add_three_items_and_remove_first_one(inventory_page) -> None:
     """
         # Scenario 4. Add 3 items and remove one item
     """
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
+    expected_card_quantity = '2'
+
+    inventory_page = await inventory_page
     for index in range(3):
         await inventory_page.click_generic_item(index)
     await inventory_page.click_generic_remove_item(0)
     await inventory_page.click_card()
     card_pages = inventory_page.navigate_to(Pages.CardPage)
-    await card_pages.verify_card_quantity('2')
+    await card_pages.verify_card_quantity(expected_card_quantity)
 
 
 @pytest.mark.asyncio
-async def test_add_one_item_and_checkout(log_as_standard_user) -> None:
+async def test_add_one_item_and_checkout(inventory_page) -> None:
     """
         # Scenario 5. Add one item and check out
     """
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
+    inventory_page = await inventory_page
     await inventory_page.click_generic_item(0)
     await inventory_page.click_card()
     card_page = inventory_page.navigate_to(Pages.CardPage)
@@ -90,17 +88,18 @@ async def test_add_one_item_and_checkout(log_as_standard_user) -> None:
 
 
 @pytest.mark.asyncio
-async def test_add_four_items_and_checkout(log_as_standard_user) -> None:
+async def test_add_four_items_and_checkout(inventory_page) -> None:
     """
         # Scenario 6. Add four items and check out
     """
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
+    expected_card_quantity = 4
+
+    inventory_page = await inventory_page
     for index in range(4):
         await inventory_page.click_generic_item(index)
     await inventory_page.click_card()
     card_pages = inventory_page.navigate_to(Pages.CardPage)
-    await card_pages.verify_card_quantity('4')
+    await card_pages.verify_card_quantity(expected_card_quantity)
     await card_pages.click_checkout()
     checkout_page = card_pages.navigate_to(Pages.CheckoutPage)
     await checkout_page.fill_checkout_information('Andrzej', 'Zaaaaa', '87-100')
@@ -111,7 +110,7 @@ async def test_add_four_items_and_checkout(log_as_standard_user) -> None:
 
 
 @pytest.mark.asyncio
-async def test_one_item_display(log_as_standard_user) -> None:
+async def test_one_item_display(inventory_page) -> None:
     """
         # Scenario 7. Check one item display
     """
@@ -119,9 +118,8 @@ async def test_one_item_display(log_as_standard_user) -> None:
     expected_price = '$29.99'
     expected_header = 'Sauce Labs Backpack'
     expected_description = 'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.'
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
 
+    inventory_page = await inventory_page
     await inventory_page.click_generic_item_name(0)
     item_page = inventory_page.navigate_to(Pages.ItemPage)
     image_path = await item_page.get_image_src()
@@ -138,13 +136,11 @@ async def test_one_item_display(log_as_standard_user) -> None:
 
 
 @pytest.mark.asyncio
-async def test_deletion_of_multiply_items(log_as_standard_user) -> None:
+async def test_deletion_of_multiply_items(inventory_page) -> None:
     """
         # Scenario 8. Check deletion of multiply items
     """
-    page = await get_first_page(log_as_standard_user)
-    inventory_page = InventoryPage(page)
-
+    inventory_page = await inventory_page
     for index in range(6):
         await inventory_page.click_generic_item(index)
     for remove_index in range(5):
